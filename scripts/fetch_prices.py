@@ -141,6 +141,7 @@ def main() -> int:
         merged = pd.concat([old, new])
         merged = merged[~merged.index.duplicated(keep="last")].sort_index()
         if not merged.empty:
+            merged = merged.apply(pd.to_numeric, errors="coerce")
             merged.to_csv(path, index_label="date", float_format="%.6f")
         s = summarize(name, label, group, merged)
         if s:
